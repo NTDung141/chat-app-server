@@ -21,4 +21,9 @@ public class ChatBoxServiceImpl implements ChatBoxService{
     public List<ChatBox> getChatBoxByIdIn(List<String> chatBoxIdList) {
         return chatBoxRepository.findChatBoxByIdIn(chatBoxIdList);
     }
+
+    @Override
+    public ChatBox getChatBoxById(String id) {
+        return chatBoxRepository.findChatBoxById(id);
+    }
 }

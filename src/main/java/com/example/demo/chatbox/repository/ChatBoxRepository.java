@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ChatBoxRepository extends MongoRepository<ChatBox, String> {
     List<ChatBox> findChatBoxByIdIn(List<String> chatBoxIdList);
+    ChatBox findChatBoxById(String id);
 }

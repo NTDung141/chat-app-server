@@ -9,4 +9,5 @@ import java.util.List;
 public interface ChatBoxService {
     public ChatBox saveChatBox(ChatBox chatBox);
     public List<ChatBox> getChatBoxByIdIn(List<String> chatBoxIdList);
+    public ChatBox getChatBoxById(String id);
 }

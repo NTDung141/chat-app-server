@@ -1,5 +1,6 @@
 package com.example.demo.chatbox.model;
 
+import com.example.demo.message.model.Message;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,4 +16,5 @@ public class ChatBox {
     private String id;
     private List<String> userIdList;
     private String chatBoxName;
+    private Message lastMessage;
 }

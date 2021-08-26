@@ -30,6 +30,7 @@ public class MessageController {
 
         ChatBox chatBox = chatBoxService.getChatBoxById(message.getChatBoxId());
         chatBox.setLastMessage(message);
+        chatBox.setLastTimeAccessUnix(message.getSendTimeUnix());
         chatBoxService.saveChatBox(chatBox);
 
         String destination = "/topic/message/" + message.getReceiverId();

@@ -17,4 +17,5 @@ public class ChatBox {
     private List<String> userIdList;
     private String chatBoxName;
     private Message lastMessage;
+    private Long lastTimeAccessUnix;
 }

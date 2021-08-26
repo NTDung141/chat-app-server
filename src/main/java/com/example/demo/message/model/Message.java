@@ -18,4 +18,5 @@ public class Message {
     private String senderName;
     private String receiverId;
     private String message;
+    private Long sendTimeUnix;
 }

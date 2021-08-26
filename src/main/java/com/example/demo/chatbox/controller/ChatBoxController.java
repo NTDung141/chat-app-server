@@ -34,9 +34,10 @@ public class ChatBoxController {
                 for (String id : newChatBox.getUserIdList()) {
                     if(id != user.getId()) {
                         contactUserIdList.add(id);
-                        user.setContactUserIdList(contactUserIdList);
                     }
                 }
+
+                user.setContactUserIdList(contactUserIdList);
             }
         }
 

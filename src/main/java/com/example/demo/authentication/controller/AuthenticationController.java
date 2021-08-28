@@ -1,5 +1,6 @@
 package com.example.demo.authentication.controller;
 
+import com.example.demo.authentication.model.AuthenticationLoginRequest;
 import com.example.demo.authentication.model.AuthenticationResponse;
 import com.example.demo.chatbox.service.ChatBoxService;
 import com.example.demo.security.jwt.JwtTokenService;
@@ -16,7 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -26,10 +27,11 @@ public class AuthenticationController {
     private final ChatBoxService chatBoxService;
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody User user) {
-        UserDTO loginUser = new UserMapper(chatBoxService, userService).mapToUserDTO(userService.login(user));
-        String username = user.getUsername();
-        String password = user.getPassword();
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationLoginRequest authReq) {
+        UserDTO loginUser = new UserMapper(chatBoxService, userService)
+                .mapToUserDTO(userService.login(authReq.getUsername(), authReq.getPassword()));
+        String username = authReq.getUsername();
+        String password = authReq.getPassword();
         String jwtToken = "";
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);

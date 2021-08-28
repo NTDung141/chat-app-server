@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface UserService extends UserDetailsService {
     public User register(User user);
-    public User login(User user);
+    public User login(String username, String password);
     public User saveUser(User user);
     public void saveUserList(List<User> userList);
     public User findUserById(String userId);

@@ -24,6 +24,13 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
+        httpServletResponse.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+
         try {
             String token = jwtTokenService.getJwtToken(httpServletRequest);
 
@@ -39,12 +46,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
         }
-
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
-        httpServletResponse.addHeader("Access-Control-Expose-Headers", "xsrf-token");
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }

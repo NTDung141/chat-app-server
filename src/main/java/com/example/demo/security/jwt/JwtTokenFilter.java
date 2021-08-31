@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -15,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Component
@@ -30,24 +33,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 //        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
 //        httpServletResponse.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
 //        httpServletResponse.addHeader("Access-Control-Expose-Headers", "xsrf-token");
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Access-Control-Allow-Origin",
+                "Access-Control-Request-Method", "Access-Control-Request-Headers", "Origin",
+                "Cache-Control", "Content-Type"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        source.getCorsConfiguration(httpServletRequest);
 
-        // Access-Control-Allow-Origin
-        String origin = httpServletRequest.getHeader("Origin");
-        httpServletResponse.setHeader("Access-Control-Allow-Origin", "*");
-        httpServletResponse.setHeader("Vary", "Origin");
-
-        // Access-Control-Max-Age
-        httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-
-        // Access-Control-Allow-Credentials
-        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
-
-        // Access-Control-Allow-Methods
-        httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-
-        // Access-Control-Allow-Headers
-        httpServletResponse.setHeader("Access-Control-Allow-Headers",
-                "Origin, X-Requested-With, Content-Type, Accept, " + "X-CSRF-TOKEN");
 
         try {
             String token = jwtTokenService.getJwtToken(httpServletRequest);

@@ -9,9 +9,12 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 public class WebSocketSecurityConfiguration extends AbstractSecurityWebSocketMessageBrokerConfigurer {
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
-        messages.simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT,
-                SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT).permitAll()
-                .simpSubscribeDestMatchers("/topic/message/*").authenticated()
+//        messages.simpTypeMatchers(SimpMessageType.CONNECT, SimpMessageType.HEARTBEAT,
+//                SimpMessageType.UNSUBSCRIBE, SimpMessageType.DISCONNECT).permitAll()
+//                .simpSubscribeDestMatchers("/topic/message/*").authenticated()
+//                .anyMessage().denyAll();
+        messages.simpDestMatchers("/topic/**").authenticated()
+                .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll()
                 .anyMessage().denyAll();
     }
 
